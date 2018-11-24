@@ -31,7 +31,13 @@
             <tbody>
                 <tr>
                     <td>Rabiul Islam</td>
-                    <td>Rabiul Islam</td>
+                    <td class="row ml-20">
+                        <a class="btn btn-info btn-xs btn-flat" href="#"><i class="icon fa fa-edit"></i></a>
+                        <form method="POST">
+                            {{csrf_field()}}
+                            <button type="submit" class="btn btn-xs btn-danger btn-flat"><i class="icon fa fa-trash"  onclick="return confirm('Are you sure to delete this ?');"></i></button>
+                        </form>
+                    </td>
                 </tr>
             </tbody>
         </table>
