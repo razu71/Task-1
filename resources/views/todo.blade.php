@@ -10,11 +10,14 @@
     <title>Todo List</title>
 </head>
 <body>
-    <div class="offset-lg-3 col-lg-6 mt-lg-5">
+    <div class="offset-lg-1 col-lg-10 mt-lg-5">
         <form action="{{route('todoStore')}}" method="POST">
             <div class="row">
-                <div class="col-lg-10">
+                <div class="col-lg-12">
                     <input class="form-control" name="title" id="title" placeholder="Write a list">
+                    <input class="form-control" name="description" id="description" placeholder="Write a description">
+                    <input class="form-control" name="level" id="level" placeholder="Select a list">
+                    <input class="form-control" name="date" id="date" placeholder="Select a date">
                 </div>
                 <div class="col-lg-2">
                     <button class="button">Add list</button>
@@ -25,19 +28,27 @@
             <thead class="thead">
                 <tr>
                     <td>Todo Title</td>
+                    <td>Description</td>
+                    <td>Level</td>
+                    <td>Date</td>
                     <td>Actions</td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Rabiul Islam</td>
-                    <td class="row ml-20">
-                        <a class="btn btn-info btn-xs btn-flat" href="#"><i class="icon fa fa-edit"></i></a>
-                        <form method="POST">
-                            {{csrf_field()}}
-                            <button type="submit" class="btn btn-xs btn-danger btn-flat"><i class="icon fa fa-trash"  onclick="return confirm('Are you sure to delete this ?');"></i></button>
-                        </form>
-                    </td>
+                   {{--  @foreach($todo as $list)
+                        <td>{{$list->title}}</td>
+                        <td>{{$list->description}}</td>
+                        <td>{{$list->level}}</td>
+                        <td>{{$list->date}}</td>
+                        <td class="row ml-20">
+                            <a class="btn btn-info btn-xs btn-flat" href=""><i class="icon fa fa-edit"></i></a>
+                            <form action="#" method="POST">
+                                {{csrf_field()}}
+                                <button type="submit" class="btn btn-xs btn-danger btn-flat"><i class="icon fa fa-trash"  onclick="return confirm('Are you sure to delete this ?');"></i></button>
+                            </form>
+                        </td>
+                    @endforeach --}}
                 </tr>
             </tbody>
         </table>

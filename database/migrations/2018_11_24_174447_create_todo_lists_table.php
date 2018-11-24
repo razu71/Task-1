@@ -15,7 +15,11 @@ class CreateTodoListsTable extends Migration
     {
         Schema::create('todo_lists', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('level_id')->unsigned();
+            $table->foreign('level_id')->references('id')->on('levels');
             $table->string('title');
+            $table->string('description');
+            $table->date('date');
             $table->timestamps();
         });
     }

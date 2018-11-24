@@ -17,7 +17,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Route::group(['middleware'=>'auth:api'], function (){
-    Route::get('todo','TodoController@index')->name('index');
+Route::group(['middleware'=>'auth:api'], function (){
+    Route::get('todo','TodoController@index')->name('todo');
     Route::post('todo-store','TodoController@todoStore')->name('todoStore');
-//});
+    Route::post('todo-edit/{id}','TodoController@todoEdit')->name('todoEdit');
+    Route::post('todo-delete/{id}','TodoController@todoDelete')->name('todoDelete');
+});
