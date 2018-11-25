@@ -18,7 +18,7 @@ class CreateTodoListsTable extends Migration
             $table->integer('level_id')->unsigned();
             $table->foreign('level_id')->references('id')->on('levels');
             $table->string('title');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->date('date');
             $table->timestamps();
         });

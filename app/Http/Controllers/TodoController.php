@@ -2,54 +2,56 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TodoListRequest;
 use App\TodoList;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class TodoController extends Controller
 {
+    /*show all todo list*/
     public function index(){
         $todo = TodoList::get();
-        return view('todo')->with(['todo' => $todo]);
+        return response()->json($todo);
     }
-    public function todoStore(Request $request){
-//        dd($request->all());
-        $rules = [
-            'title' => 'required',
-            'level' => 'required',
-            'date' => 'required|date'
-        ];
-        $messages = [
-            'title.required' => 'Title must be required',
-            'level.required' => 'Level must be required',
-            'date.required' => 'Date must be required',
-            'date.date' => 'Must be a date'
-        ];
-        $validation = Validator::make($request->all(),$rules,$messages);
-        if ($validation->fails()){
-//            return response()->json(['error' => 'Some thing went wrong']);
-            return redirect()->back()->with(['error' => 'Some thing went wrong']);
+    /*store a new todo list*/
+    public function todoStore(TodoListRequest $request){
+        $validated = $request->validated();
+        if (!$validated){
+            return response()->json(['error' => 'Something went wrong']);
         }
         else{
             $data = [
-                'level_id' => $request->level,
+                'level_id' => $request->level_id,
                 'title' => $request->title,
                 'description' => $request->description,
                 'date' => $request->date,
             ];
             TodoList::create($data);
-//            return response()->json(['success' => 'Successfuly added a todo list']);
-            return redirect()->back()->with(['success' => 'Successfuly added a todo list']);
+            return response()->json(['success' => 'Successfuly added a todo list']);
         }
     }
-    public function todoEdit($id){
-        $data['list'] = TodoList::where('id', $id)->first();
+
+    /*update or edit a existing todo list from the todo list*/
+    public function todoEdit(TodoListRequest $request, $id){
+        $validated = $request->validated();
+        if (!$validated){
+            return response()->json(['error' => 'Something went wrong']);
+        }
+        else {
+            $data = [
+                'level_id' => $request->level_id,
+                'title' => $request->title,
+                'description' => $request->description,
+                'date' => $request->date,
+            ];
+        }
+        TodoList::where(['id' => $id])->update($data);
         return response()->json(['success' => 'Todo List updated successfully']);
     }
+
+/*Delete a list from todo list*/
     public function todoDelete($id){
         $list = TodoList::find($id);
         $list->delete();
-        // return response()->json(['success' => 'Todo List Deleted successfully']);
-        return back()->with('success', 'Todo List Deleted successfully');
+         return response()->json(['success' => 'Todo List Deleted successfully']);
     }
 }
